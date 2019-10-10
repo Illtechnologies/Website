@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if ticker %}
+  {{ ticker }}
+{% endif %}
+
+
+
+{% if api %}
+  {% if api == "ERROR"%}
+    There was a problem with your ticker symbol, please try again.
+
+    {% else %}
+      <h1>{{ api.companyName}}</h1><br/>
+      Symbol: {{ api.symbol }}<br/>
+      Latest Price: ${{ api.latestPrice }}<br/>
+      High: ${{ api.high }}<br/>
+      Low: ${{ api.low }}<br/>
+      Previous Close: ${{ api.previousClose }}<br/>
+      YTD Change: {{ api.ytdChange }}<br/>
+      Market Cap: ${{ api.marketCap }}<br/>
+      Bid Price: ${{ api.iexBidPrice }}<br/>
+      Bid Size: {{ api.iexBidSize }}<br/>
+      Ask Price: ${{ api.iexAskPrice }}<br/>
+      Ask Size: {{ api.iexAskSize}}<br/>
+      52 Week High: ${{ api.week52High }}<br/>
+      52 Week Low: ${{ api.week52Low }}<br/>
+      Volume: {{ api.volume }}<br/>
+      Previous Day Volume: {{ api.previousVolume }}<br/>
+
+    {% endif %}
+{% endif %}
+{% endblock %}

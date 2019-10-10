@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<h1>Add Ticker Symbol</h1><br/>
+
+<p>On this page you can pull live stock data by adding your favorite tickers and have the real time data displayed in a table with my personal favorite stock data. This is done by utilizing IEX clouds finacials API, with Django frameworks, python, and bootstrap 4.  </p><br/>
+<p>Visit the following sites for more info:</p>
+<a href="www.https://iexcloud.io/">IEXcloud API</a><br/>
+<a href="https://www.python.org/">Python</a><br/>
+<a href="https://www.djangoproject.com/">Django</a><br/>
+<a href="https://getbootstrap.com">Bootstrap</a><br/>
+<br/>
+
+  <form action="{% url 'aticker' %}"class="form-inline my-2 my-lg-0" method="POST">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="search" placeholder="Ticker Symbol" aria-label="Search" name="ticker">
+    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Submit</button>
+  </form>
+<br/>
+
+<table class="table table-hover tabel-striped tabel-bordered table-dark">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Ticker</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">Latest Price</th>
+      <th scope="col">High</th>
+      <th scope="col">Low</th>
+      <th scope="col">Previous Close</th>
+      <th scope="col">YTD Change</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">Bid Price</th>
+      <th scope="col">Bid Size</th>
+      <th scope="col">Ask Price</th>
+      <th scope="col">Ask Size</th>
+      <th scope="col">52 Week High</th>
+      <th scope="col">52 Week Low</th>
+      <th scope="col">Volume</th>
+      <th scope="col">Prev. Day Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if ticker %}
+    <tr>
+      {% for list_item in output %}
+      <tr>
+            <th scope="row">{{ list_item.symbol }}</th>
+            <td>{{ list_item.companyName}}</td>
+            <td>{{ list_item.latestPrice }}</td>
+            <td>{{ list_item.high }}</td>
+            <td>{{ list_item.low }}</td>
+            <td>{{ list_item.previousClose }}</td>
+            <td>{{ list_item.ytdChange }}</td>
+            <td>{{ list_item.marketCap }}</td>
+            <td>{{ list_item.iexBidPrice }}</td>
+            <td>{{ list_item.iexBidSize }}</td>
+            <td>{{ list_item.iexAskPrice }}</td>
+            <td>{{ list_item.iexAskSize}}</td>
+            <td>{{ list_item.week52High }}</td>
+            <td>{{ list_item.week52Low }}</td>
+            <td>{{ list_item.volume }}</td>
+            <td>{{ list_item.previousVolume }}</td>
+        </tr>
+      {% endfor %}
+
+  {% endif %}
+  </tbody>
+</table>
+
+
+{% for item in ticker %}
+| {{ item }} - <a href="{% url 'delete' item.id %}">Remove |</a>
+{% endfor %}
+<br/>
+<br/>
+
+
+
+{% endblock %}
